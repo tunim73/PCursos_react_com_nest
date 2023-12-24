@@ -24,7 +24,9 @@ export class AulaService {
   }
 
   findAll() {
-    return this.prisma.aula.findMany();
+    return this.prisma.aula.findMany({
+      include:{curso:true, alunos:true}
+    });
   }
 
   findOne(id: number) {
