@@ -34,7 +34,7 @@ model Curso {
   alunos      Aluno[]
   professores Professor[]
   aulas       Aula[]
-
+  categorias  Categoria_curso[]
   @@map("cursos")
 }
 
@@ -68,4 +68,11 @@ model AulasOfAlunos {
 
   @@id([aulaId, alunoId])
   @@map("aulasOfAlunos")
+}
+
+model Categoria_curso {
+  id    Int    @id @default(autoincrement())
+  tipo  String
+  cursos Curso[]
+  @@map("categoria_cursos")
 }
