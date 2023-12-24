@@ -11,7 +11,6 @@ import {
 import { AlunoService } from './aluno.service';
 import { CreateAlunoDto } from './dto/create-aluno.dto';
 import { UpdateAlunoDto } from './dto/update-aluno.dto';
-import { Prisma } from '@prisma/client';
 
 @Controller('aluno')
 export class AlunoController {
@@ -51,4 +50,10 @@ export class AlunoController {
   unenrollCurso(@Param('id') id: string, @Body() body: { cursoId: number }) {
     return this.alunoService.unenrollCurso(+id, +body.cursoId);
   }
+
+  @Patch(':id/watched_aula')
+  watchedAula(@Param('id') id: string, @Body() body: { aulaId: number }) {
+    return this.alunoService.watchedAula(+id, +body.aulaId);
+  }
+  
 }

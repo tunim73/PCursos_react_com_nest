@@ -11,8 +11,21 @@ export class AlunoService {
     return await this.prisma.aluno.create({ data });
   }
 
-  async findAll() {
-    return await this.prisma.aluno.findMany();
+  async findAll() { 
+    return await this.prisma.aluno.findMany({
+      include: {
+        aulas: { 
+          include: {
+            aula: {
+              select: {
+                nome:true
+              }
+            }
+          }
+        },
+        cursos: true,
+      },
+    });
   }
 
   async findOne(id: number) {
@@ -55,6 +68,25 @@ export class AlunoService {
       data: {
         cursos: {
           disconnect: { id: cursoId },
+        },
+      },
+      where: {
+        id: alunoId,
+      },
+    });
+  }
+
+  async watchedAula(alunoId: number, aulaId: number) {
+    return await this.prisma.aluno.update({
+      data: {
+        aulas: {
+          create: {
+            aula: {
+              connect: {
+                id: aulaId,
+              },
+            },
+          },
         },
       },
       where: {
