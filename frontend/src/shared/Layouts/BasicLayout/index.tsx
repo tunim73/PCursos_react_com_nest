@@ -7,7 +7,7 @@ export const BasicLayout = () => {
       <div className="">
         <NavBar />
       </div>
-      <div>
+      <div className="h-full flex items-center justify-center">
         <Outlet />
       </div>
     </>
