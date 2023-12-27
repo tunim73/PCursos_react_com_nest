@@ -12,8 +12,8 @@ export default {
       lg: "	1024px"
     },
     fontSize: {
-      sm: '1rem',
-      base: '1.2rem',
+      sm: '1.1rem',
+      base: '1.5rem',
       xl: '1.953rem',
       '2xl': '2.441rem',
       '3xl': '3.052rem',
