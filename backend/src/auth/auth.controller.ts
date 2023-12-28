@@ -22,4 +22,9 @@ export class AuthController {
   signIn(@Body() data: AuthDto) {
     return this.authService.signIn(data.email, data.password, data.type);
   }
+
+  @Get('profile')
+  getProfile(@Request() req) {
+    return req.user;
+  }
 }
