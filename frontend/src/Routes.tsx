@@ -1,11 +1,11 @@
-import { ErrorPage, Home, Login } from "pages/public";
+import { ErrorPage, Home, Login, Register } from "pages/public";
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import { BasicLayout } from "shared/Layouts";
 
 export const Router = createBrowserRouter([
   {
     path: "/",
-    element: <Navigate to={"/home"}/>
+    element: <Navigate to={"/home"} />,
   },
   {
     path: "/",
@@ -14,11 +14,15 @@ export const Router = createBrowserRouter([
     children: [
       {
         path: "home",
-        element: <Home/>,
+        element: <Home />,
       },
       {
         path: "login",
         element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
       },
     ],
   },

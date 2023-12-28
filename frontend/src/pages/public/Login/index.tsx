@@ -1,34 +1,47 @@
-import { Button, Card, Checkbox, Label, TextInput } from "flowbite-react";
+import { LoginForm } from "components";
+import { typeFieldsLoginForm } from "types";
+
+const fieldsLoginForm: typeFieldsLoginForm[] = [
+  {
+    id: "email",
+    label: "Seu email",
+    type: "email",
+    placeholder: "email@email.com",
+    required: true,
+  },
+  {
+    id: "password",
+    label: "Sua senha",
+    type: "password",
+    placeholder: "**********",
+    required: true,
+  },
+];
+
+const alternativeLink = {
+  link: "/register",
+  name: "cadastrar-se",
+};
+
+type fieldsLogin = {
+  email: string;
+  password: string;
+  professor: boolean;
+};
 
 export const Login = () => {
+  const actionOnSubmit = (data: fieldsLogin, setError: any) => {
+    console.log("data: ", data);
+  };
+
   return (
-    <div>
-      <Card className="max-w-sm">
-        <form className="flex flex-col gap-4">
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="email1" value="Your email" />
-            </div>
-            <TextInput
-              id="email1"
-              type="email"
-              placeholder="name@flowbite.com"
-              required
-            />
-          </div>
-          <div>
-            <div className="mb-2 block">
-              <Label htmlFor="password1" value="Your password" />
-            </div>
-            <TextInput id="password1" type="password" required />
-          </div>
-          <div className="flex items-center gap-2">
-            <Checkbox id="remember" />
-            <Label htmlFor="remember">Remember me</Label>
-          </div>
-          <Button type="submit">Submit</Button>
-        </form>
-      </Card>
+    <div className="">
+      <LoginForm
+        fields={fieldsLoginForm}
+        buttonName={"Entrar"}
+        alternativeLink={alternativeLink}
+        actionOnSubmit={actionOnSubmit}
+      />
     </div>
   );
 };
