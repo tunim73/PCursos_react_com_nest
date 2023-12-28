@@ -31,9 +31,10 @@ export const LoginForm = ({
 
   const onSubmit = (data: any) => {
     const newData = data;
-    newData.professor = checkboxSelected;
 
-    actionOnSubmit(data, setError);
+    if (checkboxSelected) newData.type = "professor";
+    
+    actionOnSubmit(newData, setError);
   };
 
   return (

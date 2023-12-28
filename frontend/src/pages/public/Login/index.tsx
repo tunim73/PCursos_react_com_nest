@@ -26,7 +26,7 @@ const alternativeLink = {
 type fieldsLogin = {
   email: string;
   password: string;
-  professor: boolean;
+  type: string;
 };
 
 export const Login = () => {

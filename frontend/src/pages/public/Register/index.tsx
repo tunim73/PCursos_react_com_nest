@@ -37,7 +37,7 @@ type fieldsRegister = {
   email: string;
   password: string;
   password2: string;
-  professor: boolean;
+  type: string;
 };
 
 const alternativeLink = {
@@ -48,6 +48,7 @@ const alternativeLink = {
 export const Register = () => {
   const actionOnSubmit = (data: fieldsRegister, setError: any) => {
     if (!data) return;
+    console.log("data: ", data);
     if (data.password !== data.password2) {
       setError("password2", {
         type: "password2 incorreto",
