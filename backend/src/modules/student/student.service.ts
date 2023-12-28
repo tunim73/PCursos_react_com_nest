@@ -1,14 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateStudentDto } from './dto/create-student.dto';
 import { UpdateStudentDto } from './dto/update-student.dto';
 import { PrismaService } from '../../prisma.service';
+import { Hash } from 'src/util/hash/hash';
 
 @Injectable()
 export class StudentService {
   constructor(private prisma: PrismaService) {}
 
-  async create(data: CreateStudentDto) {
-    return await this.prisma.student.create({ data });
+  async create({ email, password, name }: CreateStudentDto) {
+    const user = await this.findEmail(email);
+
+    if (user) throw new NotFoundException('aluno já cadastrado');
+
+    const hash = await Hash.apply(password);
+
+    return await this.prisma.student.create({
+      data: {
+        email,
+        name,
+        password: hash,
+      },
+    });
   }
 
   async findAll() {
@@ -38,6 +51,15 @@ export class StudentService {
       },
     });
   }
+
+  async findEmail(email: string) {
+    return await this.prisma.student.findUnique({
+      where: {
+        email,
+      },
+    });
+  }
+
 
   async update(id: number, updateStudentDto: UpdateStudentDto) {
     return await this.prisma.student.update({

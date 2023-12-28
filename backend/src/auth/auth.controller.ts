@@ -9,7 +9,7 @@ import {
 } from '@nestjs/common';
 
 import { AuthService } from './auth.service';
-import { AuthDto } from './dto/auth.dto';
+import { ReqAuthDto } from './dto/req-auth.dto';
 import { Public } from 'src/decorators/publicRoute.decorator';
 
 @Controller('auth')
@@ -19,7 +19,7 @@ export class AuthController {
   @Public()
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  signIn(@Body() data: AuthDto) {
+  signIn(@Body() data: ReqAuthDto) {
     return this.authService.signIn(data.email, data.password, data.type);
   }
 

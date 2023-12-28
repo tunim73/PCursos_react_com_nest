@@ -1,15 +1,27 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateTeacherDto } from './dto/create-teacher.dto';
 import { UpdateTeacherDto } from './dto/update-teacher.dto';
 import { PrismaService } from 'src/prisma.service';
-import { Prisma } from '@prisma/client';
+import { Hash } from 'src/util/hash/hash';
 
 @Injectable()
 export class TeacherService {
   constructor(private prisma: PrismaService) {}
 
-  async create(createTeacherDto: CreateTeacherDto) {
-    return await this.prisma.teacher.create({ data: createTeacherDto });
+  async create({ email, password, name }: CreateTeacherDto) {
+    const user = await this.findEmail(email);
+
+    if (user) throw new NotFoundException('professor já cadastrado');
+
+    const hash = await Hash.apply(password);
+
+    return await this.prisma.teacher.create({
+      data: {
+        email,
+        name,
+        password: hash,
+      },
+    });
   }
 
   async findAll() {
@@ -23,6 +35,14 @@ export class TeacherService {
       },
       include: {
         courses: true,
+      },
+    });
+  }
+
+  async findEmail(email: string) {
+    return await this.prisma.teacher.findUnique({
+      where: {
+        email,
       },
     });
   }
