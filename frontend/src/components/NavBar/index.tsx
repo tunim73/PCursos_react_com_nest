@@ -1,25 +1,42 @@
 import { Navbar } from "flowbite-react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+
+const navLinks = [
+  {
+    link: "/home",
+    name: "Home",
+  },
+  {
+    link: "/home",
+    name: "Cursos",
+  },
+  {
+    link: "/home",
+    name: "Contatos",
+  },
+];
 
 export const NavBar = () => {
   return (
     <Navbar fluid rounded>
-      <Navbar.Brand as={Link} href="/home">
+      <NavLink to="/home">
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white text-indigo-500">
           PCursos
         </span>
-      </Navbar.Brand>
+      </NavLink>
       <Navbar.Toggle />
       <Navbar.Collapse className="ml-2">
-        <Navbar.Link href="/home">Home</Navbar.Link>
-        <Navbar.Link href="#">
-          Cursos
-        </Navbar.Link>
-        <Navbar.Link href="#">Contatos</Navbar.Link>
-        <Navbar.Link href="/login" className="text-indigo-500">
+        {navLinks.map((e) => {
+          return (
+            <NavLink key={e.name} className="text-gray-700" to={e.link}>
+              {e.name}
+            </NavLink>
+          );
+        })}
+        <NavLink to={"/login"} className="text-indigo-500">
           Entrar
-        </Navbar.Link>
+        </NavLink>
       </Navbar.Collapse>
     </Navbar>
-  );  
+  );
 };
