@@ -42,7 +42,7 @@ export class AuthService {
 
     if (!isPasswordCorrect) throw new UnauthorizedException('incorrect password');
 
-    const payload = { user, type };
+    const payload = { user: {...user, type} };
 
     delete user.password;
 
