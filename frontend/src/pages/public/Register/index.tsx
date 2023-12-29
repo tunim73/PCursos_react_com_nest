@@ -1,12 +1,13 @@
 import { LoginForm } from "components";
-import { typeFieldsLoginForm } from "types";
+import { FieldsRegister, typeFieldsLoginForm } from "types";
+import { SetErrorOfForm } from "types/SetErrorOfForm";
 
 const fieldsRegisterForm: typeFieldsLoginForm[] = [
   {
     id: "name",
     label: "Nome",
     type: "text",
-    placeholder: "name",
+    placeholder: "Remando...",
     required: true,
   },
   {
@@ -32,23 +33,14 @@ const fieldsRegisterForm: typeFieldsLoginForm[] = [
   },
 ];
 
-type fieldsRegister = {
-  name: string;
-  email: string;
-  password: string;
-  password2: string;
-  type: string;
-};
-
 const alternativeLink = {
   link: "/login",
   name: "Fazer login",
 };
 
 export const Register = () => {
-  const actionOnSubmit = (data: fieldsRegister, setError: any) => {
+  const actionOnSubmit = (data: FieldsRegister, setError: SetErrorOfForm) => {
     if (!data) return;
-    console.log("data: ", data);
     if (data.password !== data.password2) {
       setError("password2", {
         type: "password2 incorreto",
