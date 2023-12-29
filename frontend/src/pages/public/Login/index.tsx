@@ -1,5 +1,8 @@
 import { LoginForm } from "components";
-import { typeFieldsLoginForm } from "types";
+import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "shared/contexts";
+import { FieldsLogin, typeFieldsLoginForm } from "types";
+import { SetErrorOfForm } from "types/SetErrorOfForm";
 
 const fieldsLoginForm: typeFieldsLoginForm[] = [
   {
@@ -23,15 +26,39 @@ const alternativeLink = {
   name: "cadastrar-se",
 };
 
-type fieldsLogin = {
-  email: string;
-  password: string;
-  type: string;
-};
+
 
 export const Login = () => {
-  const actionOnSubmit = (data: fieldsLogin, setError: any) => {
-    console.log("data: ", data);
+  const { signin } = useAuthContext();
+  const navigate = useNavigate();
+
+  const actionOnSubmit = async (
+    data: FieldsLogin,
+    setError: SetErrorOfForm
+  ) => {
+    const response = await signin(data.email, data.password, "student");
+
+    if (response === true) {
+      console.log("hehehe");
+      navigate("#"); //mandar para um dashboard
+      return;
+    }
+
+    if (response === "user not found") {
+      setError("email", {
+        type: "user not found",
+        message: "usuário não localizado",
+      });
+      return;
+    }
+
+    if (response === "incorrect password") {
+      setError("password", {
+        type: "incorrect password",
+        message: "senha incorreta",
+      });
+      return;
+    }
   };
 
   return (
