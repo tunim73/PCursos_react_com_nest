@@ -47,9 +47,23 @@ export class StudentService {
         id,
       },
       include: {
-        courses: true,
+        courses: {
+          include: {
+            categories: {
+              orderBy: {
+                category: 'asc',
+              },
+              select: {
+                category: true,
+              },
+            },
+          },
+          orderBy: {
+            title: 'asc',
+          },
+        },
       },
-    });
+    });    
   }
 
   async findEmail(email: string) {
@@ -59,7 +73,6 @@ export class StudentService {
       },
     });
   }
-
 
   async update(id: number, updateStudentDto: UpdateStudentDto) {
     return await this.prisma.student.update({
