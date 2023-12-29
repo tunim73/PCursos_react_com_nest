@@ -39,8 +39,7 @@ export const Login = () => {
     const response = await signin(data.email, data.password, "student");
 
     if (response === true) {
-      console.log("hehehe");
-      navigate("#"); //mandar para um dashboard
+      navigate("/meus-cursos");
       return;
     }
 
