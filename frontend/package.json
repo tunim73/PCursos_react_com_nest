@@ -12,6 +12,7 @@
   "dependencies": {
     "@types/react-router-dom": "^5.3.3",
     "autoprefixer": "^10.4.16",
+    "axios": "^1.6.3",
     "flowbite-react": "^0.7.2",
     "localforage": "^1.10.0",
     "match-sorter": "^6.3.1",
