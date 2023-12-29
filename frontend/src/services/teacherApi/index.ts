@@ -19,7 +19,7 @@ const connectionWithEndpoints = () => ({
     password: string
   ): Promise<boolean | ApiException> => {
     try {
-      await api.post("/student", {
+      await api.post("/teacher", {
         name,
         email,
         password,
@@ -35,4 +35,4 @@ const connectionWithEndpoints = () => ({
   },
 });
 
-export const studentApi = connectionWithEndpoints();
+export const teacherApi = connectionWithEndpoints();
