@@ -29,7 +29,7 @@ export class CourseService {
           categories: {
             connectOrCreate: connectOrCreateCategorias,
           },
-          image
+          image,
         },
       });
 
@@ -51,21 +51,33 @@ export class CourseService {
 
   async update(
     id: number,
-    { title, description, categories }: UpdateCourseDto,
+    { title, description, categories, image }: UpdateCourseDto,
   ) {
-    const arrayCategoria = categories.toLowerCase().split(',');
-
-    const connectOrCreateCategorias = arrayCategoria.map((category) => {
-      return {
+    if (categories) {
+      const arrayCategoria = categories.toLowerCase().split(',');
+      const connectOrCreateCategorias = arrayCategoria.map((category) => {
+        return {
+          where: {
+            category,
+          },
+          create: {
+            category,
+          },
+        };
+      });
+      return await this.prisma.course.update({
         where: {
-          category,
+          id,
         },
-        create: {
-          category,
+        data: {
+          title,
+          description,
+          categories: {
+            connectOrCreate: connectOrCreateCategorias,
+          },
         },
-      };
-    });
-
+      });
+    }
     return await this.prisma.course.update({
       where: {
         id,
@@ -73,9 +85,7 @@ export class CourseService {
       data: {
         title,
         description,
-        categories: {
-          connectOrCreate: connectOrCreateCategorias,
-        },
+        image,
       },
     });
   }
