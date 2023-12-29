@@ -36,11 +36,11 @@ export class AuthService {
 
     const user = await findUser();
 
-    if (!user) throw new NotFoundException('Usuário não localizado');
+    if (!user) throw new NotFoundException('user not found');
 
     const isPasswordCorrect = await Hash.compare(password, user.password);
 
-    if (!isPasswordCorrect) throw new UnauthorizedException('Senha incorreta');
+    if (!isPasswordCorrect) throw new UnauthorizedException('incorrect password');
 
     const payload = { user, type };
 
