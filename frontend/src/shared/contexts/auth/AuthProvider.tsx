@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
       setUser(null);
       return;
     }
-    setUser(data);
+    setUser(data.user);
   };
 
   const signin = async (email: string, password: string, type: string) => {
