@@ -33,7 +33,7 @@ export const LoginForm = ({
     const newData = data;
 
     if (checkboxSelected) newData.type = "teacher";
-
+    else { newData.type = 'student'}
     actionOnSubmit(newData, setError);
   };
 
