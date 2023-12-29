@@ -1,9 +1,10 @@
 import { Navbar } from "flowbite-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { useAuthContext } from "shared/contexts";
 
 export const NavBar = () => {
   const { user, signout } = useAuthContext();
+  const navigate = useNavigate();
 
   const navLinks = [
     {
@@ -19,6 +20,12 @@ export const NavBar = () => {
       name: "Contatos",
     },
   ];
+
+  const onSignout = () => {
+    signout();
+    navigate("/home");
+    return;
+  };
 
   return (
     <Navbar fluid rounded>
@@ -46,7 +53,7 @@ export const NavBar = () => {
           </NavLink>
         ) : (
           <label
-            onClick={signout}
+            onClick={onSignout}
             className="text-base  text-gray-700 cursor-pointer hover:text-cyan-700"
           >
             Sair

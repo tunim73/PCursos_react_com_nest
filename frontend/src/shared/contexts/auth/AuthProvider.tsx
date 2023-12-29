@@ -36,6 +36,7 @@ export const AuthProvider = ({ children }: { children: JSX.Element }) => {
   const signout = () => {
     localStorage.removeItem("authToken");
     setUser(null);
+    return;
   };
 
   return (
