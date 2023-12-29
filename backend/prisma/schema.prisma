@@ -31,6 +31,7 @@ model Course {
   id          Int              @id @default(autoincrement())
   title       String
   description String?
+  image       String?
   students    Student[]
   teachers    Teacher[]
   lessons     Lesson[]

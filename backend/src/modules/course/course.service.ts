@@ -7,7 +7,7 @@ import { PrismaService } from 'src/prisma.service';
 export class CourseService {
   constructor(private prisma: PrismaService) {}
 
-  async create({ title, description, categories }: CreateCourseDto) {
+  async create({ title, description, categories, image }: CreateCourseDto) {
     const arrayCategoria = categories.toLowerCase().split(',');
 
     const connectOrCreateCategorias = arrayCategoria.map((category) => {
@@ -29,6 +29,7 @@ export class CourseService {
           categories: {
             connectOrCreate: connectOrCreateCategorias,
           },
+          image
         },
       });
 
