@@ -1,6 +1,7 @@
+import { MyCourses } from "pages/private";
 import { ErrorPage, Home, Login, Register } from "pages/public";
 import { Navigate, createBrowserRouter } from "react-router-dom";
-import { BasicLayout } from "shared/Layouts";
+import { BasicLayout, LayoutWithAuth } from "shared/Layouts";
 
 export const Router = createBrowserRouter([
   {
@@ -23,6 +24,17 @@ export const Router = createBrowserRouter([
       {
         path: "register",
         element: <Register />,
+      },
+    ],
+  },
+  {
+    path: "/",
+    element: <LayoutWithAuth />,
+    errorElement: <ErrorPage />,
+    children: [
+      {
+        path: "meus-cursos",
+        element: <MyCourses />,
       },
     ],
   },
