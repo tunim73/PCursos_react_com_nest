@@ -7,7 +7,6 @@ const connectionWithEndpoints = () => ({
   ): Promise<(User & { courses: Course[] }) | false> => {
     const settingGeneralAxios = settingAxios();
     if (!settingGeneralAxios) return false;
-    console.log("id: ", id);
     const resposta = await api.get(`/student/${id}`, settingGeneralAxios);
 
     return resposta.data;
