@@ -1,22 +1,25 @@
-import { Navbar } from "flowbite-react";
+import { Navbar, NavbarLink } from "flowbite-react";
 import { NavLink } from "react-router-dom";
-
-const navLinks = [
-  {
-    link: "/home",
-    name: "Home",
-  },
-  {
-    link: "/home",
-    name: "Cursos",
-  },
-  {
-    link: "/home",
-    name: "Contatos",
-  },
-];
+import { useAuthContext } from "shared/contexts";
 
 export const NavBar = () => {
+  const { user, signout } = useAuthContext();
+
+  const navLinks = [
+    {
+      link: "/home",
+      name: "Home",
+    },
+    {
+      link: user ? "/meus-cursos" : "/login",
+      name: "Meus Cursos",
+    },
+    {
+      link: "/home",
+      name: "Contatos",
+    },
+  ];
+
   return (
     <Navbar fluid rounded>
       <NavLink to="/home">
@@ -28,14 +31,27 @@ export const NavBar = () => {
       <Navbar.Collapse className="ml-2">
         {navLinks.map((e) => {
           return (
-            <NavLink key={e.name} className="text-gray-700" to={e.link}>
+            <NavLink
+              key={e.name}
+              className="text-gray-700 cursor-pointer hover:text-cyan-700 "
+              to={e.link}
+            >
               {e.name}
             </NavLink>
           );
         })}
-        <NavLink to={"/login"} className="text-indigo-500">
-          Entrar
-        </NavLink>
+        {!user ? (
+          <NavLink to={"/login"} className="text-indigo-500">
+            Entrar
+          </NavLink>
+        ) : (
+          <NavbarLink
+            onClick={signout}
+            className="text-gray-700 cursor-pointer hover:text-cyan-700"
+          >
+            Sair
+          </NavbarLink>
+        )}
       </Navbar.Collapse>
     </Navbar>
   );
