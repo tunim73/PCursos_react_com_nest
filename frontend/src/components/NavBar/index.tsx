@@ -1,4 +1,4 @@
-import { Navbar, NavbarLink } from "flowbite-react";
+import { Navbar } from "flowbite-react";
 import { NavLink } from "react-router-dom";
 import { useAuthContext } from "shared/contexts";
 
@@ -23,7 +23,7 @@ export const NavBar = () => {
   return (
     <Navbar fluid rounded>
       <NavLink to="/home">
-        <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white text-indigo-500">
+        <span className="self-center whitespace-nowrap text-3xl font-semibold dark:text-white text-indigo-500">
           PCursos
         </span>
       </NavLink>
@@ -33,7 +33,7 @@ export const NavBar = () => {
           return (
             <NavLink
               key={e.name}
-              className="text-gray-700 cursor-pointer hover:text-cyan-700 "
+              className="text-base text-gray-700 cursor-pointer hover:text-cyan-700"
               to={e.link}
             >
               {e.name}
@@ -41,16 +41,16 @@ export const NavBar = () => {
           );
         })}
         {!user ? (
-          <NavLink to={"/login"} className="text-indigo-500">
+          <NavLink to={"/login"} className="text-base text-indigo-500">
             Entrar
           </NavLink>
         ) : (
-          <NavbarLink
+          <label
             onClick={signout}
-            className="text-gray-700 cursor-pointer hover:text-cyan-700"
+            className="text-base  text-gray-700 cursor-pointer hover:text-cyan-700"
           >
             Sair
-          </NavbarLink>
+          </label>
         )}
       </Navbar.Collapse>
     </Navbar>
