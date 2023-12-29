@@ -1,5 +1,5 @@
 export interface Categories {
-  id: string | undefined;
+  id?: string;
   category: string;
 }
 
