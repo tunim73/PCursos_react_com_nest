@@ -62,6 +62,11 @@ export class StudentService {
             title: 'asc',
           },
         },
+        lessons: {
+          include: {
+            lesson:true
+          }
+        }
       },
     });    
   }

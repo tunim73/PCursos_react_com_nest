@@ -39,4 +39,15 @@ export class CourseController {
   remove(@Param('id') id: string) {
     return this.courseService.remove(+id);
   }
+
+  @Get(':courseId/student/:studentId')
+  getCourseAndCompletedlesson(
+    @Param('courseId') courseId: string,
+    @Param('studentId') studentId: string,
+  ) {
+    return this.courseService.getCourseAndCompletedlesson(
+      +courseId,
+      +studentId,
+    );
+  }
 }

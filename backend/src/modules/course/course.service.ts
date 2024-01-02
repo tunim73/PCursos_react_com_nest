@@ -44,9 +44,80 @@ export class CourseService {
   }
 
   async findOne(id: number) {
-    return await this.prisma.course.findUnique({
+    const courses = await this.prisma.course.findUnique({
       where: { id },
+      include: {
+        categories: {
+          orderBy: {
+            category: 'asc',
+          },
+        },
+        lessons: {
+          orderBy: {
+            name: 'asc',
+          },
+          include: {
+            lessonType: true,
+          },
+        },
+      },
     });
+
+    return { courses };
+  }
+
+  async getCourseAndCompletedlesson(courseId: number, studentId: number) {
+    const course = await this.prisma.course.findUnique({
+      where: { id: courseId },
+      include: {
+        categories: {
+          orderBy: {
+            category: 'asc',
+          },
+        },
+        lessons: {
+          orderBy: {
+            name: 'asc',
+          },
+          include: {
+            lessonType: true,
+          },
+        },
+      },
+    });
+
+    const courseAndLessonsCompleted = await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
+      select: {
+        lessons: {
+          where: {
+            students: {
+              every: {
+                studentId,
+              },
+            },
+          },
+          select: {
+            id: true,
+          },
+        },
+      },
+    });
+
+    const watchedLessons = courseAndLessonsCompleted.lessons;
+
+    const allLessonsOfCourse = course.lessons;
+
+    const allLessonsMarkedAsWatched = allLessonsOfCourse.map((lesson) => {
+      const checkLesson = watchedLessons.some((e) => e.id === lesson.id);
+      return { ...lesson, watched: checkLesson };
+    });
+
+    course.lessons = allLessonsMarkedAsWatched;
+
+    return course;
   }
 
   async update(
@@ -104,3 +175,28 @@ export class CourseService {
     });
   }
 }
+
+/*
+
+
+await this.prisma.course.findUnique({
+      where: { id: courseId },
+      include: {
+        lessons: {
+          include: {
+            lessonType: true,
+          },
+          where: {
+            students: {
+              every: {
+                studentId,
+              },
+            },
+          },
+        },
+      },
+    });
+
+
+
+*/
