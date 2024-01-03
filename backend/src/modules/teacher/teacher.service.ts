@@ -83,4 +83,29 @@ export class TeacherService {
       },
     });
   }
+
+  async getTeacherCourses(id: number) {
+    return await this.prisma.teacher.findUnique({
+      where: {
+        id,
+      },
+      include: {
+        courses: {
+          include: {
+            categories: {
+              orderBy: {
+                category: 'asc',
+              },
+              select: {
+                category: true,
+              },
+            },
+          },
+          orderBy: {
+            title: 'asc',
+          },
+        },
+      },
+    });
+  }
 }

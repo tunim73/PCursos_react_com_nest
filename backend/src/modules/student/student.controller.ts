@@ -32,6 +32,10 @@ export class StudentController {
   findOne(@Param('id') id: string) {
     return this.studentService.findOne(+id);
   }
+  @Get(':id/courses')
+  getStudentCourses(@Param('id') id: string) {
+    return this.studentService.getStudentCourses(+id);
+  }
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateStudentDto: UpdateStudentDto) {

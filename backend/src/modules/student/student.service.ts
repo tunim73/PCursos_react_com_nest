@@ -41,7 +41,7 @@ export class StudentService {
     });
   }
 
-  async findOne(id: number) {
+  async getStudentCourses(id: number) {
     return await this.prisma.student.findUnique({
       where: {
         id,
@@ -64,11 +64,19 @@ export class StudentService {
         },
         lessons: {
           include: {
-            lesson:true
-          }
-        }
+            lesson: true,
+          },
+        },
       },
-    });    
+    });
+  }
+
+  async findOne(id: number) {
+    return await this.prisma.student.findUnique({
+      where: {
+        id,
+      },
+    });
   }
 
   async findEmail(email: string) {
