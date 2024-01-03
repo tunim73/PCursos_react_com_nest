@@ -1,4 +1,6 @@
-interface Lesson {
+import { User } from "types"
+
+export interface Lesson {
   id: number
   name: string
   lessonType: {
@@ -6,5 +8,6 @@ interface Lesson {
     type: string
   }
   embed?:string
-  watched:boolean
+  watched?: boolean
+  teacher?: User
 }

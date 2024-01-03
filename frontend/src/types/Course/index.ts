@@ -1,3 +1,5 @@
+import { Lesson, User } from "types";
+
 export interface Categories {
   id?: string;
   category: string;
@@ -10,4 +12,5 @@ export interface Course {
   image: string;
   categories: Categories[];
   lessons?: Lesson[]
+  teacher?: User[]
 }
