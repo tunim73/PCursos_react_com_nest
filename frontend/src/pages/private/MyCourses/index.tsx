@@ -5,7 +5,7 @@ import { useAuthContext } from "shared/contexts";
 import { useMyCourses } from "shared/hooks";
 
 export const MyCourses = () => {
-  const { courses } = useMyCourses();
+  const { courses, fetcher } = useMyCourses();
   const { user } = useAuthContext();
   const [openModal, setOpenModal] = useState(false);
 
@@ -23,7 +23,7 @@ export const MyCourses = () => {
             openModal={openModal}
             setOpenModal={setOpenModal}
           >
-            <CourseFormForModal type="create" buttonName="Novo" />
+            <CourseFormForModal type="create" buttonName="Novo" fetcher={fetcher} />
           </ModalForm>
           <Button
             color="green"

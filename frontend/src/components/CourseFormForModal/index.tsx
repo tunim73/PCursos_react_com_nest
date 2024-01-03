@@ -1,6 +1,8 @@
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { courseApi } from "services";
+import { useAuthContext } from "shared/contexts";
 import { categoriesString } from "shared/util";
 import { Course } from "types";
 
@@ -8,13 +10,19 @@ type Props = {
   buttonName: string;
   type: "create" | "update";
   values?: Course;
+  fetcher: () => Promise<void>;
 };
 
 type ValidKeys = keyof Course;
 
-export const CourseFormForModal = ({ buttonName, type, values }: Props) => {
+export const CourseFormForModal = ({
+  buttonName,
+  type,
+  values,
+  fetcher,
+}: Props) => {
   const { register, handleSubmit, setValue } = useForm<Course>();
-  
+  const { user } = useAuthContext();
 
   useEffect(() => {
     if (type === "create") return;
@@ -31,8 +39,19 @@ export const CourseFormForModal = ({ buttonName, type, values }: Props) => {
     });
   }, []);
 
-  const onSubmit = handleSubmit((data) => {
+  const onSubmit = handleSubmit(async (data) => {
+    if (!user) return;
+
     if (type === "create") {
+      const newCourse = await courseApi.create(data, user?.id);
+
+      if (newCourse === true) {
+        fetcher();
+        return;
+      }
+
+      console.error("Erro ao criar curso. ", newCourse);
+
       return;
     }
   });

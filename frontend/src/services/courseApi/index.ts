@@ -38,6 +38,32 @@ const connectionWithEndpoints = () => ({
       return false;
     }
   },
+
+  create: async (
+    { title, description, categories, image }: Course,
+    teacherId: number
+  ):Promise< boolean | ApiException> => {
+    const settingGeneralAxios = settingAxios();
+    if (!settingGeneralAxios) return false;
+
+    try {
+      await api.post(
+        `/course`,
+        {
+          title,
+          description,
+          categories,
+          image,
+          teacherId,
+        },
+        settingGeneralAxios
+      );
+      return true;
+    } catch (error) {
+      if (axios.isAxiosError(error)) return error.response?.data;
+      return false;
+    }
+  },
 });
 
 export const courseApi = connectionWithEndpoints();
