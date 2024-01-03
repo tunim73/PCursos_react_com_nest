@@ -174,29 +174,29 @@ export class CourseService {
       });
     });
   }
-}
 
-/*
-
-
-await this.prisma.course.findUnique({
-      where: { id: courseId },
+  async getCourseForTeacher(courseId: number) {
+    return await this.prisma.course.findUnique({
+      where: {
+        id: courseId,
+      },
       include: {
-        lessons: {
-          include: {
-            lessonType: true,
-          },
-          where: {
-            students: {
-              every: {
-                studentId,
-              },
-            },
+        categories: {
+          orderBy: {
+            category: 'asc',
           },
         },
+        lessons: {
+          orderBy: {
+            name: 'asc',
+          },
+          include: {
+            teacher: true,
+            lessonType: true,
+          },
+        },
+        teachers: true,
       },
     });
-
-
-
-*/
+  }
+}

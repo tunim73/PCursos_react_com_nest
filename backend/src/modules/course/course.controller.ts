@@ -50,4 +50,9 @@ export class CourseController {
       +studentId,
     );
   }
+
+  @Get(':id/teacher')
+  getCourseForTeacher(@Param('id') courseId: string,) {
+    return this.courseService.getCourseForTeacher(+courseId)
+  }
 }
