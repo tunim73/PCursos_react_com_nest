@@ -4,6 +4,7 @@ import {
   ModalForm,
   UpdateButton,
 } from "components";
+import { Button, ListGroup } from "flowbite-react";
 import { useState } from "react";
 import { useAuthContext } from "shared/contexts";
 import { useCourse } from "shared/hooks/useCourse";
@@ -12,26 +13,44 @@ import { categoriesString } from "shared/util";
 export const Course = () => {
   const { course } = useCourse();
   const { user } = useAuthContext();
-  
+
+  const [showListGroup, setShowListGroup] = useState(false);
   const [openModal, setOpenModal] = useState(false);
-  
+
+  const onClickListGroup = () => {
+    setShowListGroup((e) => !e);
+  };
+
   const onClickSetOpenModal = () => {
-    setOpenModal(true);
+    setOpenModal((e) => !e);
   };
 
   return (
     <div className="w-full h-full lg:px-24 md:px-24 px-3">
-      <div className="w-full flex justify-start">
+      <div className="w-full flex justify-between gap-2">
         <h2 className="text-2xl font-bold text-gray-700 mt-2 ">
           {course.title}
         </h2>
-        {user?.type !== "teacher" && (
-          <>
+        {user?.type === "teacher" && (
+          <div className="flex mt-[18px] relative">
             <UpdateButton
-              className="ml-2 mt-[18px]"
-              actionOnClick={onClickSetOpenModal}
+              colorButton="yellow"
+              colorSVG="#374151"
+              actionOnClick={onClickListGroup}
+              className=""
             />
-            <ModalForm
+            {showListGroup && (
+              <ListGroup
+                className="absolute 
+              left-0 mt-11 ml-[-85px] bg-white border border-gray-300 rounded shadow"
+              >
+                <ListGroup.Item>Atualizar Curso</ListGroup.Item>
+                <ListGroup.Item>Atualizar Professores</ListGroup.Item>
+                <ListGroup.Item>Atualizar Aulas</ListGroup.Item>
+              </ListGroup>
+            )}
+
+            {/* <ModalForm
               title="Atualizar Curso"
               openModal={openModal}
               setOpenModal={setOpenModal}
@@ -41,8 +60,8 @@ export const Course = () => {
                 buttonName="Atualizar"
                 values={course}
               />
-            </ModalForm>
-          </>
+            </ModalForm> */}
+          </div>
         )}
       </div>
       <div className="ml-1 mb-8">
@@ -56,8 +75,8 @@ export const Course = () => {
           <span className="font-bold text-gray-700 dark:text-gray-400">
             Descrição:{" "}
           </span>
-          {course.description} 
-          fewffffffffffffffffffffffffffffffffffffffffffffafeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee
+          {course.description}
+          fewffffffffffff ffffffff ffffff fffff fffff f ff fffff afeeeeeeeeeee ee eee eeeeeeee eeee eeeeeeee eeeeeeee eeeeeeeee eeeeeeeeeeeeeeeeeee
         </p>
       </div>
       <section className="flex flex-col w-full justify-center items-center gap-8">

@@ -86,7 +86,7 @@ export const LessonCard = ({ id, lessonType, name, watched, embed }: Lesson) => 
         <p className="font-normal capitalize text-gray-700 dark:text-gray-400">
           Formato: {lessonType.type}
         </p>
-        {user?.type !== "teacher" && (
+        {user?.type === "teacher" && (
           <UpdateButton actionOnClick={onClickForOpenModal} />
         )}
 
