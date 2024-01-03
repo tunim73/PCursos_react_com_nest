@@ -9,4 +9,5 @@ export interface Course {
   description: string;
   image: string;
   categories: Categories[];
+  lessons?: Lesson[]
 }
