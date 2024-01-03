@@ -16,8 +16,11 @@ export class CourseController {
   constructor(private readonly courseService: CourseService) {}
 
   @Post()
-  create(@Body() createCourseDto: CreateCourseDto) {
-    return this.courseService.create(createCourseDto);
+  create(
+    @Body() createCourseDto: CreateCourseDto,
+    @Body('teacherId') teacherId: number,
+  ) {
+    return this.courseService.create(createCourseDto, teacherId);
   }
 
   @Get()
@@ -52,7 +55,7 @@ export class CourseController {
   }
 
   @Get(':id/teacher')
-  getCourseForTeacher(@Param('id') courseId: string,) {
-    return this.courseService.getCourseForTeacher(+courseId)
+  getCourseForTeacher(@Param('id') courseId: string) {
+    return this.courseService.getCourseForTeacher(+courseId);
   }
 }
