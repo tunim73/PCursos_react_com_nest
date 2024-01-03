@@ -12,10 +12,10 @@ export const useCourse = () => {
   const fetcher = useCallback(async () => {
     if (!user || !id || !user) return;
 
-    const course = await courseApi.getCourseAndCompletedlesson(
-      Number(id),
-      user.id
-    );
+    const course =
+      user.type === "student"
+        ? await courseApi.getCourseAndCompletedlesson(Number(id), user.id)
+        : await courseApi.getCourseForTeacher(Number(id));
 
     if (!course || isApiException(course)) return;
 
