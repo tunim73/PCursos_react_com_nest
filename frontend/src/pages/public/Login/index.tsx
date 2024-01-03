@@ -26,8 +26,6 @@ const alternativeLink = {
   name: "cadastrar-se",
 };
 
-
-
 export const Login = () => {
   const { signin } = useAuthContext();
   const navigate = useNavigate();
@@ -36,7 +34,9 @@ export const Login = () => {
     data: FieldsLogin,
     setError: SetErrorOfForm
   ) => {
-    const response = await signin(data.email, data.password, "student");
+    if (!data) return;
+
+    const response = await signin(data.email, data.password, data.type);
 
     if (response === true) {
       navigate("/meus-cursos");
