@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { studentApi } from "services";
+import { studentApi, teacherApi } from "services";
 import { useAuthContext } from "shared/contexts";
 import { Course } from "types";
 
@@ -9,11 +9,12 @@ export const useMyCourses = () => {
 
   const fetcher = useCallback(async () => {
     if (!user) return;
-    const student = await studentApi.findOne(user.id);
 
-    if (!student) return;
+    const userWithCourse = (user.type === 'student') ? await studentApi.myCourses(user.id) : await teacherApi.myCourses(user.id);
 
-    return setCourses(student.courses);
+    if (!userWithCourse) return;
+
+    return setCourses(userWithCourse.courses);
   }, []);
 
   useEffect(() => {
