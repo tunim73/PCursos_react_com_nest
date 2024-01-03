@@ -1,11 +1,12 @@
 import { CourseCard, CourseFormForModal, ModalForm } from "components";
 import { Button } from "flowbite-react";
 import { useState } from "react";
+import { useAuthContext } from "shared/contexts";
 import { useMyCourses } from "shared/hooks";
 
 export const MyCourses = () => {
   const { courses } = useMyCourses();
-
+  const { user } = useAuthContext();
   const [openModal, setOpenModal] = useState(false);
 
   return (
@@ -15,20 +16,24 @@ export const MyCourses = () => {
           Meus Cursos
         </h2>
       </div>
-      <ModalForm
-        title="Novo Curso"
-        openModal={openModal}
-        setOpenModal={setOpenModal}
-      >
-        <CourseFormForModal type="create" buttonName="Novo" />
-      </ModalForm>
-      <Button
-        color="green"
-        className={"mb-10"}
-        onClick={() => setOpenModal(true)}
-      >
-        Novo Curso
-      </Button>
+      {user?.type === "teacher" && (
+        <>
+          <ModalForm
+            title="Novo Curso"
+            openModal={openModal}
+            setOpenModal={setOpenModal}
+          >
+            <CourseFormForModal type="create" buttonName="Novo" />
+          </ModalForm>
+          <Button
+            color="green"
+            className={"mb-10"}
+            onClick={() => setOpenModal(true)}
+          >
+            Novo Curso
+          </Button>
+        </>
+      )}
       <section className="flex justify-center gap-10 flex-wrap">
         {courses.map((course) => {
           return (
