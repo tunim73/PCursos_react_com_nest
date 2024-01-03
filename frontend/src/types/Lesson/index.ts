@@ -5,5 +5,6 @@ interface Lesson {
     id: number
     type: string
   }
+  embed?:string
   watched:boolean
 }

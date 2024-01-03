@@ -3,7 +3,7 @@ import { Card } from "flowbite-react";
 import { useState } from "react";
 import { useAuthContext } from "shared/contexts";
 
-export const LessonCard = ({ id, lessonType, name, watched }: Lesson) => {
+export const LessonCard = ({ id, lessonType, name, watched, embed }: Lesson) => {
   const { user } = useAuthContext();
   const [openModal, setOpenModal] = useState(false);
 
@@ -20,7 +20,7 @@ export const LessonCard = ({ id, lessonType, name, watched }: Lesson) => {
           className=""
           width="560"
           height="315"
-          src="https://www.youtube.com/embed/ooCqalwSpuE?si=Jr-z2glTWku1OCZj&amp;start=2"
+          src={embed}
           title="YouTube video player"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           allowFullScreen

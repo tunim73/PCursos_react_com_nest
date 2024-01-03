@@ -69,6 +69,7 @@ export const Course = () => {
               name={item.name}
               watched={item.watched}
               lessonType={item.lessonType}
+              embed={item.embed}
             />
           );
         })}
