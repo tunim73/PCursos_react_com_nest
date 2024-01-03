@@ -3,4 +3,5 @@ export class CreateLessonDto {
   lessonTypeId: number;
   courseId: number;
   teacherId: number;
+  embed: string;
 }

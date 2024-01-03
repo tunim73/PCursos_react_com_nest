@@ -7,13 +7,14 @@ import { PrismaService } from 'src/prisma.service';
 export class LessonService {
   constructor(private prisma: PrismaService) {}
 
-  async create({ name, lessonTypeId, courseId, teacherId }: CreateLessonDto) {
+  async create({ name, lessonTypeId, courseId, teacherId, embed }: CreateLessonDto) {
     return await this.prisma.lesson.create({
       data: {
         courseId,
         teacherId,
         name,
         lessonTypeId,
+        embed
       },
     });
   }

@@ -42,6 +42,7 @@ model Course {
 model Lesson {
   id           Int               @id @default(autoincrement())
   name         String
+  embed        String?
   lessonType   LessonType        @relation(fields: [lessonTypeId], references: [id])
   course       Course            @relation(fields: [courseId], references: [id])
   teacher      Teacher           @relation(fields: [teacherId], references: [id])
