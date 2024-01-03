@@ -1,7 +1,7 @@
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { CategoriesString } from "shared/util";
+import { categoriesString } from "shared/util";
 import { Course } from "types";
 
 type Props = {
@@ -14,8 +14,7 @@ type ValidKeys = keyof Course;
 
 export const CourseFormForModal = ({ buttonName, type, values }: Props) => {
   const { register, handleSubmit, setValue } = useForm<Course>();
-
-  const categoriesString = CategoriesString(values?.categories);
+  
 
   useEffect(() => {
     if (type === "create") return;
@@ -23,7 +22,7 @@ export const CourseFormForModal = ({ buttonName, type, values }: Props) => {
 
     Object.entries(values).forEach(([key, value]) => {
       if (key === "categories") {
-        const newValue = categoriesString();
+        const newValue = categoriesString(values?.categories);
         setValue(key as ValidKeys, newValue);
         return;
       }

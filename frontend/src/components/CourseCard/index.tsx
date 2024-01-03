@@ -1,11 +1,10 @@
 import { Card } from "flowbite-react";
 import { NavLink } from "react-router-dom";
-import { CategoriesString } from "shared/util";
+import { categoriesString } from "shared/util";
 
 import { Course } from "types";
 
 export const CourseCard = ({ title, categories, id, image }: Course) => {
-  const categoriesString = CategoriesString(categories);
 
   return (
     <div className="">
@@ -18,7 +17,7 @@ export const CourseCard = ({ title, categories, id, image }: Course) => {
           <span className="font-bold text-gray-700 dark:text-gray-400">
             Categoria(s):{" "}
           </span>
-          {categoriesString()}
+          {categoriesString(categories)}
         </p>
 
         <NavLink
