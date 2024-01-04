@@ -12,8 +12,10 @@ export const CourseUpdateList = ({ values, fetcher }: Props) => {
   const [showListGroup, setShowListGroup] = useState(false);
 
   const [modalAboutCourseUpdate, setModalAboutCourseUpdate] = useState(false);
-  const [modalAboutTeacherUpdate, setModalAboutTeacherUpdate] = useState(false);
-  const [modalAboutLessonUpdate, setModalAboutLessonUpdate] = useState(false);
+  const [modalAboutLessonAdd, setModalAboutLessonAdd] = useState(false);
+  const [modalAboutLessonRemove, setModalAboutLessonRemove] = useState(false);
+  const [modalAboutTeacherAdd, setModalAboutTeacherAdd] = useState(false);
+  const [modalAboutTeacherRemove, setModalAboutTeacherRemove] = useState(false);
 
   const onClickListGroup = () => {
     setShowListGroup((e) => !e);
@@ -23,14 +25,26 @@ export const CourseUpdateList = ({ values, fetcher }: Props) => {
     setModalAboutCourseUpdate((e) => !e);
     onClickListGroup();
   };
-  const openModalAboutTeacherUpdate = () => {
-    setModalAboutTeacherUpdate((e) => !e);
+
+  const openModalAboutLessonAdd = () => {
+    setModalAboutLessonAdd((e) => !e);
     onClickListGroup();
   };
-  const openModalAboutLessonUpdate = () => {
-    setModalAboutLessonUpdate((e) => !e);
+  const openModalAboutLessonRemove = () => {
+    setModalAboutLessonRemove((e) => !e);
     onClickListGroup();
   };
+
+  const openModalAboutTeacherAdd = () => {
+    setModalAboutTeacherAdd((e) => !e);
+    onClickListGroup();
+  };
+
+  const openModalAboutTeacherRemove = () => {
+    setModalAboutTeacherRemove((e) => !e);
+    onClickListGroup();
+  };
+  
 
   return (
     <div className="flex mt-[18px] relative">
@@ -42,17 +56,23 @@ export const CourseUpdateList = ({ values, fetcher }: Props) => {
       />
       {showListGroup && (
         <ListGroup
-          className="absolute 
+          className="absolute
           left-0 mt-11 ml-[-85px] bg-white border border-gray-300 rounded shadow"
         >
           <ListGroup.Item onClick={openModalAboutCourseUpdate}>
             Atualizar Curso
           </ListGroup.Item>
-          <ListGroup.Item onClick={openModalAboutTeacherUpdate}>
-            Atualizar Professores
+          <ListGroup.Item onClick={openModalAboutLessonAdd}>
+            Adicionar Aula
           </ListGroup.Item>
-          <ListGroup.Item onClick={openModalAboutLessonUpdate}>
-            Atualizar Aulas
+          <ListGroup.Item onClick={openModalAboutLessonRemove}>
+            Remover Aula
+          </ListGroup.Item>
+          <ListGroup.Item onClick={openModalAboutTeacherAdd}>
+            Adicionar Professor
+          </ListGroup.Item>
+          <ListGroup.Item onClick={openModalAboutTeacherRemove}>
+            Remover Professor
           </ListGroup.Item>
         </ListGroup>
       )}
@@ -69,25 +89,26 @@ export const CourseUpdateList = ({ values, fetcher }: Props) => {
         />
       </ModalForm>
       <ModalForm
-        title="Atualizar Professores"
-        openModal={modalAboutTeacherUpdate}
-        setOpenModal={setModalAboutTeacherUpdate}
+        title="Adicionar Aula"
+        openModal={modalAboutLessonAdd}
+        setOpenModal={setModalAboutLessonAdd}
       ></ModalForm>
       <ModalForm
-        title="Atualizar Aulas"
-        openModal={modalAboutLessonUpdate}
-        setOpenModal={setModalAboutLessonUpdate}
+        title="Remover Aula"
+        openModal={modalAboutLessonRemove}
+        setOpenModal={setModalAboutLessonRemove}
+      ></ModalForm>
+      <ModalForm
+        title="Adicionar Professor"
+        openModal={modalAboutTeacherAdd}
+        setOpenModal={setModalAboutTeacherAdd}
+      ></ModalForm>
+      <ModalForm
+        title="Remover Professor"
+        openModal={modalAboutTeacherRemove}
+        setOpenModal={setModalAboutTeacherRemove}
       ></ModalForm>
 
-      {/* 
-        <ModalForm
-            title="Novo Curso"
-            openModal={openModal}
-            setOpenModal={setOpenModal}
-          >
-              
-          </ModalForm>
-      */}
     </div>
   );
 };
