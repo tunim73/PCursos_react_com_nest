@@ -1,29 +1,11 @@
-import {
-  CourseFormForModal,
-  LessonCard,
-  ModalForm,
-  UpdateButton,
-} from "components";
-import { Button, ListGroup } from "flowbite-react";
-import { useState } from "react";
+import { CourseUpdateList, LessonCard } from "components";
 import { useAuthContext } from "shared/contexts";
 import { useCourse } from "shared/hooks/useCourse";
 import { categoriesString } from "shared/util";
 
 export const Course = () => {
-  const { course } = useCourse();
+  const { course, fetcher } = useCourse();
   const { user } = useAuthContext();
-
-  const [showListGroup, setShowListGroup] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
-
-  const onClickListGroup = () => {
-    setShowListGroup((e) => !e);
-  };
-
-  const onClickSetOpenModal = () => {
-    setOpenModal((e) => !e);
-  };
 
   return (
     <div className="w-full h-full lg:px-24 md:px-24 px-3">
@@ -32,36 +14,7 @@ export const Course = () => {
           {course.title}
         </h2>
         {user?.type === "teacher" && (
-          <div className="flex mt-[18px] relative">
-            <UpdateButton
-              colorButton="yellow"
-              colorSVG="#374151"
-              actionOnClick={onClickListGroup}
-              className=""
-            />
-            {showListGroup && (
-              <ListGroup
-                className="absolute 
-              left-0 mt-11 ml-[-85px] bg-white border border-gray-300 rounded shadow"
-              >
-                <ListGroup.Item>Atualizar Curso</ListGroup.Item>
-                <ListGroup.Item>Atualizar Professores</ListGroup.Item>
-                <ListGroup.Item>Atualizar Aulas</ListGroup.Item>
-              </ListGroup>
-            )}
-
-            {/* <ModalForm
-              title="Atualizar Curso"
-              openModal={openModal}
-              setOpenModal={setOpenModal}
-            >
-              <CourseFormForModal
-                type="update"
-                buttonName="Atualizar"
-                values={course}
-              />
-            </ModalForm> */}
-          </div>
+          <CourseUpdateList fetcher={fetcher} values={course} />
         )}
       </div>
       <div className="ml-1 mb-8">

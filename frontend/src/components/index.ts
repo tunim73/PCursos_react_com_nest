@@ -5,3 +5,4 @@ export * from "./ModalForm";
 export * from "./CourseFormForModal";
 export * from "./LessonCard";
 export * from "./UpdateButton";
+export * from "./CourseUpdateList";
