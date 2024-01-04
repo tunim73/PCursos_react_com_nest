@@ -132,31 +132,28 @@ export class CourseService {
     id: number,
     { title, description, categories, image }: UpdateCourseDto,
   ) {
-    if (categories) {
-      const arrayCategoria = categories.toLowerCase().split(',');
-      const connectOrCreateCategorias = arrayCategoria.map((category) => {
-        return {
-          where: {
-            category: category.trim(),
-          },
-          create: {
-            category: category.trim(),
-          },
-        };
-      });
-      return await this.prisma.course.update({
+    await this.prisma.course.update({
+      where: {
+        id,
+      },
+      data: {
+        categories: {
+          set: [],
+        },
+      },
+    });
+
+    const arrayCategoria = categories.toLowerCase().split(',');
+    const connectOrCreateCategorias = arrayCategoria.map((category) => {
+      return {
         where: {
-          id,
+          category: category.trim(),
         },
-        data: {
-          title,
-          description,
-          categories: {
-            connectOrCreate: connectOrCreateCategorias,
-          },
+        create: {
+          category: category.trim(),
         },
-      });
-    }
+      };
+    });
     return await this.prisma.course.update({
       where: {
         id,
@@ -164,7 +161,9 @@ export class CourseService {
       data: {
         title,
         description,
-        image,
+        categories: {
+          connectOrCreate: connectOrCreateCategorias,
+        },
       },
     });
   }
