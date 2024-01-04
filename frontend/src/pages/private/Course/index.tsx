@@ -76,7 +76,8 @@ export const Course = () => {
             Descrição:{" "}
           </span>
           {course.description}
-          fewffffffffffff ffffffff ffffff fffff fffff f ff fffff afeeeeeeeeeee ee eee eeeeeeee eeee eeeeeeee eeeeeeee eeeeeeeee eeeeeeeeeeeeeeeeeee
+          fewffffffffffff ffffffff ffffff fffff fffff f ff fffff afeeeeeeeeeee
+          ee eee eeeeeeee eeee eeeeeeee eeeeeeee eeeeeeeee eeeeeeeeeeeeeeeeeee
         </p>
       </div>
       <section className="flex flex-col w-full justify-center items-center gap-8">

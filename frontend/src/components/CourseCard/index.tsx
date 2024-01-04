@@ -5,10 +5,9 @@ import { categoriesString } from "shared/util";
 import { Course } from "types";
 
 export const CourseCard = ({ title, categories, id, image }: Course) => {
-
   return (
-    <div className="">
-      <Card className="max-w-sm" imgSrc={image} horizontal>
+    <div className="md:h-52 md:w-[580px] sm:w-[450px] sm:h-auto">
+      <Card className="w-full h-full" imgSrc={image} horizontal>
         <h5 className="text-xl font-bold tracking-tight text-gray-900 dark:text-white">
           {title}
         </h5>
