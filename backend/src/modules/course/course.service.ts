@@ -7,16 +7,19 @@ import { PrismaService } from 'src/prisma.service';
 export class CourseService {
   constructor(private prisma: PrismaService) {}
 
-  async create({ title, description, categories, image }: CreateCourseDto, teacherId: number) {
+  async create(
+    { title, description, categories, image }: CreateCourseDto,
+    teacherId: number,
+  ) {
     const arrayCategoria = categories.toLowerCase().split(',');
 
     const connectOrCreateCategorias = arrayCategoria.map((category) => {
       return {
         where: {
-          category:category.trim(),
+          category: category.trim(),
         },
         create: {
-          category:category.trim(),
+          category: category.trim(),
         },
       };
     });
@@ -32,9 +35,9 @@ export class CourseService {
           image,
           teachers: {
             connect: {
-              id: teacherId
-            }
-          }
+              id: teacherId,
+            },
+          },
         },
       });
 
@@ -134,10 +137,10 @@ export class CourseService {
       const connectOrCreateCategorias = arrayCategoria.map((category) => {
         return {
           where: {
-            category,
+            category: category.trim(),
           },
           create: {
-            category,
+            category: category.trim(),
           },
         };
       });
