@@ -1,10 +1,11 @@
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import { courseApi } from "services";
 import { useAuthContext } from "shared/contexts";
 import { categoriesString } from "shared/util";
-import { Course } from "types";
+import { Course, isApiException } from "types";
 
 type Props = {
   buttonName: string;
@@ -49,11 +50,18 @@ export const CourseFormForModal = ({
         fetcher();
         return;
       }
-
       console.error("Erro ao criar curso. ", newCourse);
-
       return;
     }
+
+    const newCourse = await courseApi.update(data);
+
+    if (isApiException(newCourse) || !newCourse) {
+      console.error("Erro ao atualizar curso. ", newCourse);
+      return;
+    }
+    fetcher();
+    return;
   });
 
   return (

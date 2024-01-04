@@ -42,7 +42,7 @@ const connectionWithEndpoints = () => ({
   create: async (
     { title, description, categories, image }: Course,
     teacherId: number
-  ):Promise< boolean | ApiException> => {
+  ): Promise<boolean | ApiException> => {
     const settingGeneralAxios = settingAxios();
     if (!settingGeneralAxios) return false;
 
@@ -59,6 +59,33 @@ const connectionWithEndpoints = () => ({
         settingGeneralAxios
       );
       return true;
+    } catch (error) {
+      if (axios.isAxiosError(error)) return error.response?.data;
+      return false;
+    }
+  },
+  update: async ({
+    title,
+    description,
+    categories,
+    image,
+    id,
+  }: Course): Promise<Course | ApiException | false> => {
+    const settingGeneralAxios = settingAxios();
+    if (!settingGeneralAxios) return false;
+
+    try {
+      const response = await api.patch(
+        `/course/${id}`,
+        {
+          title,
+          description,
+          categories,
+          image,
+        },
+        settingGeneralAxios
+      );
+      return response.data;
     } catch (error) {
       if (axios.isAxiosError(error)) return error.response?.data;
       return false;
