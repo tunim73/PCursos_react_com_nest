@@ -6,6 +6,7 @@ import {
   Patch,
   Param,
   Delete,
+  Put,
 } from '@nestjs/common';
 import { CourseService } from './course.service';
 import { CreateCourseDto } from './dto/create-course.dto';
@@ -57,5 +58,21 @@ export class CourseController {
   @Get(':id/teacher')
   getCourseForTeacher(@Param('id') courseId: string) {
     return this.courseService.getCourseForTeacher(+courseId);
+  }
+
+  @Put(':id/teacher/:teacherId/add')
+  addTeacherInCourse(
+    @Param('id') courseId: string,
+    @Param('teacherId') teacherId: string,
+  ) {
+    return this.courseService.addTeacherInCourse(+courseId, +teacherId);
+  }
+
+  @Put(':id/teacher/:teacherId/remove')
+  removeTeacherInCourse(
+    @Param('id') courseId: string,
+    @Param('teacherId') teacherId: string,
+  ) {
+    return this.courseService.removeTeacherInCourse(+courseId, +teacherId);
   }
 }

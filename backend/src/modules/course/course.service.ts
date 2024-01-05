@@ -206,4 +206,34 @@ export class CourseService {
       },
     });
   }
+
+  async addTeacherInCourse(courseId: number, teacherId: number) {
+    return await this.prisma.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        teachers: {
+          connect: {
+            id: teacherId,
+          },
+        },
+      },
+    });
+  }
+
+  async removeTeacherInCourse(courseId: number, teacherId: number) {
+    return await this.prisma.course.update({
+      where: {
+        id: courseId,
+      },
+      data: {
+        teachers: {
+          disconnect: {
+            id: teacherId,
+          },
+        },
+      },
+    });
+  }
 }
