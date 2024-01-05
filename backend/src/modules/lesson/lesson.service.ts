@@ -43,10 +43,22 @@ export class LessonService {
     return this.prisma.lesson.findUnique({ where: { id } });
   }
 
-  async update(id: number, updateLessonDto: UpdateLessonDto) {
+  async update(id: number, { name, teacherEmail, embed }: UpdateLessonDto) {
+    const teacher = await this.prisma.teacher.findUnique({
+      where: {
+        email: teacherEmail,
+      },
+    });
+
+    if (!teacher) throw new NotFoundException('user not found');
+
     return await this.prisma.lesson.update({
       where: { id },
-      data: updateLessonDto,
+      data: {
+        teacherId: teacher.id,
+        name,
+        embed,
+      },
     });
   }
 
