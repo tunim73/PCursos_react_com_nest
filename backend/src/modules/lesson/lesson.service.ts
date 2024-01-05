@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -7,14 +7,28 @@ import { PrismaService } from 'src/prisma.service';
 export class LessonService {
   constructor(private prisma: PrismaService) {}
 
-  async create({ name, lessonTypeId, courseId, teacherId, embed }: CreateLessonDto) {
+  async create({
+    name,
+    lessonTypeId,
+    courseId,
+    teacherEmail,
+    embed,
+  }: CreateLessonDto) {
+    const teacher = await this.prisma.teacher.findUnique({
+      where: {
+        email: teacherEmail,
+      },
+    });
+
+    if (!teacher) throw new NotFoundException('user not found');
+
     return await this.prisma.lesson.create({
       data: {
         courseId,
-        teacherId,
+        teacherId: teacher.id,
         name,
         lessonTypeId,
-        embed
+        embed,
       },
     });
   }
