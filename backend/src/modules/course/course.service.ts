@@ -236,4 +236,44 @@ export class CourseService {
       },
     });
   }
+
+  enrollCourse(courseId: number, studentId: number) {
+    return this.prisma.course.update({
+      data: {
+        students: {
+          connect: {
+            id: studentId,
+          },
+        },
+      },
+      where: {
+        id: courseId,
+      },
+    });
+  }
+
+  async unenrollCourse(courseId: number, studentId: number) {
+    return await this.prisma.$transaction([
+      this.prisma.lessonsStudents.deleteMany({
+        where: {
+          studentId,
+          AND: {
+            lesson: {
+              courseId,
+            },
+          },
+        },
+      }),
+      this.prisma.student.update({
+        data: {
+          courses: {
+            disconnect: { id: courseId },
+          },
+        },
+        where: {
+          id: studentId,
+        },
+      }),
+    ]);
+  }
 }

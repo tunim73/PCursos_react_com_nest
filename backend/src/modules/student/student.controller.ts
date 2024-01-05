@@ -47,16 +47,6 @@ export class StudentController {
     return this.studentService.remove(+id);
   }
 
-  @Put(':id/enroll_course')
-  enrollCourse(@Param('id') id: string, @Body() body: { courseId: number }) {
-    return this.studentService.enrollCourse(+id, +body.courseId);
-  }
-
-  @Put(':id/unenroll_course')
-  unenrollCourse(@Param('id') id: string, @Body() body: { courseId: number }) {
-    return this.studentService.unenrollCourse(+id, +body.courseId);
-  }
-
   @Patch(':id/watched_lesson')
   watchedLesson(@Param('id') id: string, @Body() body: { lessonId: number }) {
     return this.studentService.watchedLesson(+id, +body.lessonId);

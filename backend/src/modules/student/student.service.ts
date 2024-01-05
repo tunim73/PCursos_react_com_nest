@@ -98,31 +98,7 @@ export class StudentService {
     return await this.prisma.student.delete({ where: { id } });
   }
 
-  async enrollCourse(studentId: number, courseId: number) {
-    return await this.prisma.student.update({
-      data: {
-        courses: {
-          connect: { id: courseId },
-        },
-      },
-      where: {
-        id: studentId,
-      },
-    });
-  }
 
-  async unenrollCourse(studentId: number, courseId: number) {
-    return await this.prisma.student.update({
-      data: {
-        courses: {
-          disconnect: { id: courseId },
-        },
-      },
-      where: {
-        id: studentId,
-      },
-    });
-  }
 
   async watchedLesson(studentId: number, lessonId: number) {
     return await this.prisma.student.update({

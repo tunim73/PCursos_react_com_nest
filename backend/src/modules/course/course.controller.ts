@@ -75,4 +75,20 @@ export class CourseController {
   ) {
     return this.courseService.removeTeacherInCourse(+courseId, +teacherId);
   }
+
+  @Put(':id/enroll_course/student/:studentId')
+  enrollCourse(
+    @Param('id') courseId: string,
+    @Param('studentId') studentId: string,
+  ) {
+    return this.courseService.enrollCourse(+courseId, +studentId);
+  }
+
+  @Put(':id/unenroll_course/student/:studentId')
+  unenrollCourse(
+    @Param('id') courseId: string,
+    @Param('studentId') studentId: string,
+  ) {
+    return this.courseService.unenrollCourse(+courseId, +studentId);
+  }
 }
