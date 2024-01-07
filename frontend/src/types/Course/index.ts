@@ -12,5 +12,5 @@ export interface Course {
   image: string;
   categories: Categories[];
   lessons?: Lesson[]
-  teacher?: User[]
+  teachers?: User[]
 }

@@ -21,6 +21,7 @@ const connectionWithEndpoints = () => ({
       return false;
     }
   },
+
   getCourseForTeacher: async (
     courseId: number
   ): Promise<Course | ApiException | false> => {
@@ -64,6 +65,7 @@ const connectionWithEndpoints = () => ({
       return false;
     }
   },
+
   update: async ({
     title,
     description,
@@ -86,6 +88,46 @@ const connectionWithEndpoints = () => ({
         settingGeneralAxios
       );
       return response.data;
+    } catch (error) {
+      if (axios.isAxiosError(error)) return error.response?.data;
+      return false;
+    }
+  },
+
+  addTeacherInCourse: async (
+    courseId: number,
+    email: string
+  ): Promise<boolean | ApiException> => {
+    const settingGeneralAxios = settingAxios();
+    if (!settingGeneralAxios) return false;
+
+    try {
+      await api.put(
+        `/course/${courseId}/teacher/add`,
+        { email },
+        settingGeneralAxios
+      );
+      return true;
+    } catch (error) {
+      if (axios.isAxiosError(error)) return error.response?.data;
+      return false;
+    }
+  },
+
+  removeTeacherInCourse: async (
+    courseId: number,
+    teacherId: number
+  ): Promise<boolean | ApiException> => {
+    const settingGeneralAxios = settingAxios();
+    if (!settingGeneralAxios) return false;
+
+    try {
+      await api.put(
+        `/course/${courseId}/teacher/${teacherId}/remove`,
+        {},
+        settingGeneralAxios
+      );
+      return true;
     } catch (error) {
       if (axios.isAxiosError(error)) return error.response?.data;
       return false;
