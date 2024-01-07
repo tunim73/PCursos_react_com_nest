@@ -1,7 +1,6 @@
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
 import { courseApi } from "services";
 import { useAuthContext } from "shared/contexts";
 import { categoriesString } from "shared/util";
@@ -12,6 +11,7 @@ type Props = {
   type: "create" | "update";
   values?: Course;
   fetcher: () => Promise<void>;
+  setCloseModal: () => void;
 };
 
 type ValidKeys = keyof Course;
@@ -21,6 +21,7 @@ export const CourseFormForModal = ({
   type,
   values,
   fetcher,
+  setCloseModal,
 }: Props) => {
   const { register, handleSubmit, setValue } = useForm<Course>();
   const { user } = useAuthContext();
@@ -48,6 +49,7 @@ export const CourseFormForModal = ({
 
       if (newCourse === true) {
         fetcher();
+        setCloseModal();
         return;
       }
       console.error("Erro ao criar curso. ", newCourse);
@@ -60,7 +62,9 @@ export const CourseFormForModal = ({
       console.error("Erro ao atualizar curso. ", newCourse);
       return;
     }
+
     fetcher();
+    setCloseModal();
     return;
   });
 
