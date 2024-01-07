@@ -1,6 +1,7 @@
 import { CourseFormForModal, ModalForm, UpdateButton } from "components";
 import { ListGroup } from "flowbite-react";
-import { useState } from "react";
+import { TeacherAddForm, TeacherRemoveForm } from "pages/private";
+import { useCallback, useState } from "react";
 import { Course } from "types";
 
 type Props = {
@@ -17,6 +18,14 @@ export const CourseUpdateList = ({ values, fetcher }: Props) => {
   const [modalAboutTeacherAdd, setModalAboutTeacherAdd] = useState(false);
   const [modalAboutTeacherRemove, setModalAboutTeacherRemove] = useState(false);
 
+  const closeAllModals = useCallback(() => {
+    setModalAboutCourseUpdate(false);
+    setModalAboutLessonAdd(false);
+    setModalAboutLessonRemove(false);
+    setModalAboutTeacherAdd(false);
+    setModalAboutTeacherRemove(false);
+  }, []);
+
   const onClickListGroup = () => {
     setShowListGroup((e) => !e);
   };
@@ -30,6 +39,7 @@ export const CourseUpdateList = ({ values, fetcher }: Props) => {
     setModalAboutLessonAdd((e) => !e);
     onClickListGroup();
   };
+
   const openModalAboutLessonRemove = () => {
     setModalAboutLessonRemove((e) => !e);
     onClickListGroup();
@@ -44,7 +54,6 @@ export const CourseUpdateList = ({ values, fetcher }: Props) => {
     setModalAboutTeacherRemove((e) => !e);
     onClickListGroup();
   };
-  
 
   return (
     <div className="flex mt-[18px] relative">
@@ -86,6 +95,7 @@ export const CourseUpdateList = ({ values, fetcher }: Props) => {
           buttonName="Atualizar"
           fetcher={fetcher}
           values={values}
+          setCloseModal={closeAllModals}
         />
       </ModalForm>
       <ModalForm
@@ -102,13 +112,20 @@ export const CourseUpdateList = ({ values, fetcher }: Props) => {
         title="Adicionar Professor"
         openModal={modalAboutTeacherAdd}
         setOpenModal={setModalAboutTeacherAdd}
-      ></ModalForm>
+      >
+        <TeacherAddForm fetcher={fetcher} setCloseModal={closeAllModals} />
+      </ModalForm>
       <ModalForm
         title="Remover Professor"
         openModal={modalAboutTeacherRemove}
         setOpenModal={setModalAboutTeacherRemove}
-      ></ModalForm>
-
+      >
+        <TeacherRemoveForm
+          fetcher={fetcher}
+          values={values.teachers ? values.teachers : []}
+          setCloseModal={closeAllModals}
+        />
+      </ModalForm>
     </div>
   );
 };
