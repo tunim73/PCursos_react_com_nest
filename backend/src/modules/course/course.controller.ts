@@ -60,12 +60,12 @@ export class CourseController {
     return this.courseService.getCourseForTeacher(+courseId);
   }
 
-  @Put(':id/teacher/:teacherId/add')
+  @Put(':id/teacher/add')
   addTeacherInCourse(
     @Param('id') courseId: string,
-    @Param('teacherId') teacherId: string,
+    @Body('email') email: string,
   ) {
-    return this.courseService.addTeacherInCourse(+courseId, +teacherId);
+    return this.courseService.addTeacherInCourse(+courseId, email);
   }
 
   @Put(':id/teacher/:teacherId/remove')

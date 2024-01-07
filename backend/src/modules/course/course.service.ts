@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateCourseDto } from './dto/create-course.dto';
 import { UpdateCourseDto } from './dto/update-course.dto';
 import { PrismaService } from 'src/prisma.service';
@@ -89,6 +89,11 @@ export class CourseService {
           },
           include: {
             lessonType: true,
+          },
+        },
+        teachers: {
+          orderBy: {
+            name: 'asc',
           },
         },
       },
@@ -202,12 +207,24 @@ export class CourseService {
             lessonType: true,
           },
         },
-        teachers: true,
+        teachers: {
+          orderBy: {
+            name: 'asc',
+          },
+        },
       },
     });
   }
 
-  async addTeacherInCourse(courseId: number, teacherId: number) {
+  async addTeacherInCourse(courseId: number, teacherEmail: string) {
+    const teacher = await this.prisma.teacher.findUnique({
+      where: {
+        email: teacherEmail,
+      },
+    });
+
+    if (!teacher) throw new NotFoundException('user not found');
+
     return await this.prisma.course.update({
       where: {
         id: courseId,
@@ -215,7 +232,7 @@ export class CourseService {
       data: {
         teachers: {
           connect: {
-            id: teacherId,
+            id: teacher.id,
           },
         },
       },
