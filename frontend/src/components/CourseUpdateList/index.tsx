@@ -1,6 +1,11 @@
 import { CourseFormForModal, ModalForm, UpdateButton } from "components";
+import { LessonFormForModal } from "components/LessonFormForModal";
 import { ListGroup } from "flowbite-react";
-import { TeacherAddForm, TeacherRemoveForm } from "pages/private";
+import {
+  LessonRemoveForm,
+  TeacherAddForm,
+  TeacherRemoveForm,
+} from "pages/private";
 import { useCallback, useState } from "react";
 import { Course } from "types";
 
@@ -102,12 +107,25 @@ export const CourseUpdateList = ({ values, fetcher }: Props) => {
         title="Adicionar Aula"
         openModal={modalAboutLessonAdd}
         setOpenModal={setModalAboutLessonAdd}
-      ></ModalForm>
+      >
+        <LessonFormForModal
+          buttonName="Adicionar"
+          type="create"
+          fetcher={fetcher}
+          setCloseModal={closeAllModals}
+        />
+      </ModalForm>
       <ModalForm
         title="Remover Aula"
         openModal={modalAboutLessonRemove}
         setOpenModal={setModalAboutLessonRemove}
-      ></ModalForm>
+      >
+        <LessonRemoveForm
+          fetcher={fetcher}
+          setCloseModal={closeAllModals}
+          values={values.lessons ? values.lessons : []}
+        />
+      </ModalForm>
       <ModalForm
         title="Adicionar Professor"
         openModal={modalAboutTeacherAdd}
