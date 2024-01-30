@@ -6,3 +6,4 @@ export * from "./CourseFormForModal";
 export * from "./LessonCard";
 export * from "./UpdateButton";
 export * from "./CourseUpdateList";
+export * from "./Footer";

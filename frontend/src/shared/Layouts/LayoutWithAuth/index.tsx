@@ -1,22 +1,12 @@
-import { NavBar } from "components";
 import { NavLink } from "react-router-dom";
-import { Outlet } from "react-router-dom";
 import { useAuthContext } from "shared/contexts";
+import { BasicLayout } from "..";
 
 export const LayoutWithAuth = () => {
   const { user } = useAuthContext();
 
   if (user) {
-    return (
-      <>
-        <div className="">
-          <NavBar />
-        </div>
-        <div className="h-full flex items-center justify-center">
-          <Outlet />
-        </div>
-      </>
-    );
+    return <BasicLayout />;
   } else {
     return (
       <>
