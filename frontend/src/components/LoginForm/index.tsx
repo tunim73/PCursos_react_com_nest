@@ -33,12 +33,14 @@ export const LoginForm = ({
     const newData = data;
 
     if (checkboxSelected) newData.type = "teacher";
-    else { newData.type = 'student'}
+    else {
+      newData.type = "student";
+    }
     actionOnSubmit(newData, setError);
   };
 
   return (
-    <div className="mt-12">
+    <div className="pt-10">
       <Card className="max-w-sm">
         <form className="flex flex-col gap-4" onSubmit={handleSubmit(onSubmit)}>
           {fields.map((item) => {
@@ -55,7 +57,7 @@ export const LoginForm = ({
                   color={errors[item.id] ? "failure" : undefined}
                   helperText={
                     typeof errors[item.id]?.message === "string" && (
-                      <span>{errors[item.id]?.message || ""}</span>
+                      <span>{(errors[item.id]?.message as string) || ""}</span>
                     )
                   }
                   {...register(item.id)}
