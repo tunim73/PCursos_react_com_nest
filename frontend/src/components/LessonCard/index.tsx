@@ -1,11 +1,20 @@
 import { ModalForm, UpdateButton } from "components";
+import { LessonFormForModal } from "components/LessonFormForModal";
 import { Card } from "flowbite-react";
 import { useState } from "react";
 import { useAuthContext } from "shared/contexts";
+import { isYouTubeEmbedCodeValid } from "shared/util";
+import { Lesson } from "types";
 
-export const LessonCard = ({ id, lessonType, name, watched, embed }: Lesson) => {
+type Props = {
+  fetcher: () => Promise<void>;
+  item: Lesson;
+};
+
+export const LessonCard = ({ item, fetcher }: Props) => {
   const { user } = useAuthContext();
   const [openModal, setOpenModal] = useState(false);
+  const setCloseModal = () => setOpenModal(false);
 
   const onClickForOpenModal = () => {
     setOpenModal(true);
@@ -15,24 +24,26 @@ export const LessonCard = ({ id, lessonType, name, watched, embed }: Lesson) => 
 
   return (
     <Card className="max-w-xl w-full flex justify-center">
-      <div className="w-full flex justify-center ">
-        <iframe
-          className=""
-          width="560"
-          height="315"
-          src={embed}
-          title="YouTube video player"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-          allowFullScreen
-        ></iframe>
-      </div>
+      {item?.embed && isYouTubeEmbedCodeValid(item.embed) && (
+        <div className="w-full flex justify-center ">
+          <iframe
+            className=""
+            width="560"
+            height="315"
+            src={item?.embed}
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowFullScreen
+          ></iframe>
+        </div>
+      )}
 
       <div className="flex justify-between">
         <div className="flex justify-items-start">
           <h5 className="text-base font-bold tracking-tight text-gray-900 dark:text-white">
-            {name}
+            {item.name}
           </h5>
-          {user?.type === "student" && watched && (
+          {user?.type === "student" && item.watched && (
             <button className="ml-2" onClick={onClickWatchedButton}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -56,7 +67,7 @@ export const LessonCard = ({ id, lessonType, name, watched, embed }: Lesson) => 
               </svg>
             </button>
           )}
-          {user?.type === "student" && !watched && (
+          {user?.type === "student" && !item.watched && (
             <button className="ml-2" onClick={onClickWatchedButton}>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -84,17 +95,29 @@ export const LessonCard = ({ id, lessonType, name, watched, embed }: Lesson) => 
       </div>
       <div className="flex justify-between items-center">
         <p className="font-normal capitalize text-gray-700 dark:text-gray-400">
-          Formato: {lessonType.type}
+          Formato: {item.lessonType.type}
         </p>
         {user?.type === "teacher" && (
-          <UpdateButton actionOnClick={onClickForOpenModal} />
+          <UpdateButton
+            colorButton="yellow"
+            colorSVG="#374151"
+            actionOnClick={onClickForOpenModal}
+          />
         )}
 
         <ModalForm
           title="Atualizar Aula"
           openModal={openModal}
           setOpenModal={setOpenModal}
-        ></ModalForm>
+        >
+          <LessonFormForModal
+            buttonName="Atualizar"
+            type="update"
+            values={item}
+            fetcher={fetcher}
+            setCloseModal={setCloseModal}
+          />
+        </ModalForm>
       </div>
     </Card>
   );

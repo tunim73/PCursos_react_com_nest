@@ -29,39 +29,13 @@ export const Course = () => {
             Descrição:{" "}
           </span>
           {course.description}
-          fewffffffffffff ffffffff ffffff fffff fffff f ff fffff afeeeeeeeeeee
-          ee eee eeeeeeee eeee eeeeeeee eeeeeeee eeeeeeeee eeeeeeeeeeeeeeeeeee
         </p>
       </div>
       <section className="flex flex-col w-full justify-center items-center gap-8">
         {course.lessons?.map((item) => {
-          return (
-            <LessonCard
-              key={item.id}
-              id={item.id}
-              name={item.name}
-              watched={item.watched}
-              lessonType={item.lessonType}
-              embed={item.embed}
-            />
-          );
+          return <LessonCard key={item.id} item={item} fetcher={fetcher} />;
         })}
       </section>
-
-      {/* <section className="flex justify-center gap-10 flex-wrap">
-        {courses.map((course) => {
-          return (
-            <CourseCard
-              key={course.id}
-              categories={course.categories}
-              description={course.description}
-              id={course.id}
-              title={course.title}
-              image={course.image}
-            />
-          );
-        })}
-      </section> */}
     </div>
   );
 };
