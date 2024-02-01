@@ -33,8 +33,32 @@ const connectionWithEndpoints = () => ({
     if (!settingGeneralAxios) return false;
 
     try {
-      await api.delete(
+      await api.delete(`/lesson/${id}`, settingGeneralAxios);
+      return true;
+    } catch (error) {
+      if (axios.isAxiosError(error)) return error.response?.data;
+      return false;
+    }
+  },
+  update: async ({
+    id,
+    name,
+    teacher,
+    lessonType,
+    embed,
+  }: Lesson): Promise<boolean | ApiException> => {
+    const settingGeneralAxios = settingAxios();
+    if (!settingGeneralAxios) return false;
+
+    try {
+      await api.put(
         `/lesson/${id}`,
+        {
+          name,
+          teacherEmail: teacher?.email,
+          lessonTypeId: lessonType.id,
+          embed,
+        },
         settingGeneralAxios
       );
       return true;
@@ -46,3 +70,4 @@ const connectionWithEndpoints = () => ({
 });
 
 export const lessonApi = connectionWithEndpoints();
+

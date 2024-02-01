@@ -30,11 +30,12 @@ export const LessonFormForModal = ({
   const { id } = useParams();
 
   useEffect(() => {
-    /* if (type === "create") return;
+    if (type === "create") return;
     if (!values) return;
     Object.entries(values).forEach(([key, value]) => {
       setValue(key as keyof Lesson, value);
-    }); */
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
@@ -62,7 +63,25 @@ export const LessonFormForModal = ({
       return;
     }
 
-    //update
+    const updatedLesson = await lessonApi.update(data);
+
+    if (isApiException(updatedLesson)) {
+      if (updatedLesson.message === "user not found") {
+        setError("teacher.email", {
+          type: "user not found",
+          message: "Professor não localizado",
+        });
+        return;
+      }
+    }
+
+    if (updatedLesson === false) {
+      console.error("error no servidor");
+      return;
+    }
+    await fetcher();
+    setCloseModal();
+    return;
   });
   return (
     <form onSubmit={onSubmit}>
