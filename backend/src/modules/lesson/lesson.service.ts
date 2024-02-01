@@ -43,7 +43,10 @@ export class LessonService {
     return this.prisma.lesson.findUnique({ where: { id } });
   }
 
-  async update(id: number, { name, teacherEmail, embed }: UpdateLessonDto) {
+  async update(
+    id: number,
+    { name, teacherEmail, embed, lessonTypeId }: UpdateLessonDto,
+  ) {
     const teacher = await this.prisma.teacher.findUnique({
       where: {
         email: teacherEmail,
@@ -58,6 +61,7 @@ export class LessonService {
         teacherId: teacher.id,
         name,
         embed,
+        lessonTypeId,
       },
     });
   }
