@@ -9,6 +9,8 @@ export const MyCourses = () => {
   const { user } = useAuthContext();
   const [openModal, setOpenModal] = useState(false);
 
+  const setCloseModal = () => setOpenModal(false);
+
   return (
     <div className="w-full h-full lg:px-24 md:px-24 px-3">
       <div className="w-full flex justify-start">
@@ -23,7 +25,12 @@ export const MyCourses = () => {
             openModal={openModal}
             setOpenModal={setOpenModal}
           >
-            <CourseFormForModal type="create" buttonName="Novo" fetcher={fetcher} />
+            <CourseFormForModal
+              type="create"
+              buttonName="Novo"
+              fetcher={fetcher}
+              setCloseModal={setCloseModal}
+            />
           </ModalForm>
           <Button
             color="green"
