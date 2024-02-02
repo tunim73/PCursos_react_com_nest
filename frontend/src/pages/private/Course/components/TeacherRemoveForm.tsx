@@ -2,6 +2,7 @@ import { Button, Label, Select } from "flowbite-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { courseApi } from "services";
 import { useAuthContext } from "shared/contexts";
 import { User } from "types";
@@ -12,13 +13,18 @@ type Props = {
   setCloseModal: () => void;
 };
 
-export const TeacherRemoveForm = ({ fetcher, values, setCloseModal }: Props) => {
+export const TeacherRemoveForm = ({
+  fetcher,
+  values,
+  setCloseModal,
+}: Props) => {
   const { register, handleSubmit } = useForm<{ teacherId: number }>();
   const { user } = useAuthContext();
   const { id } = useParams();
 
   useEffect(() => {
     if (!values) return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
@@ -30,11 +36,12 @@ export const TeacherRemoveForm = ({ fetcher, values, setCloseModal }: Props) => 
     );
 
     if (oldTeacher === true) {
+      toast.success("Professor removido com sucesso!");
       fetcher();
       setCloseModal();
       return;
     }
-    console.error("Erro ao deletar professor: ", oldTeacher);
+    toast.error("Erro ao deletar professor: ");
     return;
   });
 
@@ -63,12 +70,3 @@ export const TeacherRemoveForm = ({ fetcher, values, setCloseModal }: Props) => 
     </form>
   );
 };
-
-/* 
-<label>Gender Selection</label>
-      <select {...register("gender")}>
-        <option value="female">female</option>
-        <option value="male">male</option>
-        <option value="other">other</option>
-      </select>
-*/

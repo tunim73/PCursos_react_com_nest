@@ -1,6 +1,7 @@
 import { Button, Label, TextInput } from "flowbite-react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { courseApi } from "services";
 import { useAuthContext } from "shared/contexts";
 import { User } from "types";
@@ -24,11 +25,12 @@ export const TeacherAddForm = ({ fetcher, setCloseModal }: Props) => {
     );
 
     if (newTeacher === true) {
+      toast.success("Professor adicionado com sucesso!")
       fetcher();
       setCloseModal();
       return;
     }
-    console.error("Erro ao adicionar professor. ", newTeacher);
+    toast.error("Erro ao adicionar professor. ");
     return;
   });
 

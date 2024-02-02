@@ -2,6 +2,7 @@ import { Button, Label, Select, TextInput } from "flowbite-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 import { lessonApi } from "services";
 import { Lesson, isApiException } from "types";
 
@@ -55,9 +56,10 @@ export const LessonFormForModal = ({
       }
 
       if (newLesson === false) {
-        console.error("error no servidor");
+        toast.error("error criar aula");
         return;
       }
+      toast.success("Aula adicionada com sucesso!");
       await fetcher();
       setCloseModal();
       return;
@@ -76,9 +78,10 @@ export const LessonFormForModal = ({
     }
 
     if (updatedLesson === false) {
-      console.error("error no servidor");
+      toast.error("error ao atualizar aula");
       return;
     }
+    toast.success("Aula atualizada com sucesso!");
     await fetcher();
     setCloseModal();
     return;

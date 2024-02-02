@@ -1,6 +1,7 @@
 import { Button, Label, TextInput, Textarea } from "flowbite-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { courseApi } from "services";
 import { useAuthContext } from "shared/contexts";
 import { categoriesString } from "shared/util";
@@ -39,6 +40,7 @@ export const CourseFormForModal = ({
 
       setValue(key as ValidKeys, value);
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
@@ -48,21 +50,22 @@ export const CourseFormForModal = ({
       const newCourse = await courseApi.create(data, user?.id);
 
       if (newCourse === true) {
+        toast.success("Curso adicionado com sucesso!");
         fetcher();
         setCloseModal();
         return;
       }
-      console.error("Erro ao criar curso. ", newCourse);
+      toast.error("Erro ao adicionar curso!");
       return;
     }
 
     const newCourse = await courseApi.update(data);
 
     if (isApiException(newCourse) || !newCourse) {
-      console.error("Erro ao atualizar curso. ", newCourse);
+      toast.error("Erro ao atualizar curso!");
       return;
     }
-
+    toast.success("Curso atualizado com sucesso!");
     fetcher();
     setCloseModal();
     return;

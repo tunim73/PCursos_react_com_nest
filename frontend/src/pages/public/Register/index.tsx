@@ -1,5 +1,6 @@
 import { LoginForm } from "components";
 import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
 import { studentApi, teacherApi } from "services";
 import { FieldsRegister, isApiException, typeFieldsLoginForm } from "types";
 import { SetErrorOfForm } from "types/SetErrorOfForm";
@@ -64,7 +65,7 @@ export const Register = () => {
       );
 
       if (!newStudent) {
-        //toast.warning("Erro no Servidor !");
+        toast.warning("Erro no Servidor !");
         return;
       }
       if (isApiException(newStudent)) {
@@ -75,7 +76,7 @@ export const Register = () => {
           });
         return;
       }
-      //toast.success("Usuário cadastrado com sucesso !");
+      toast.success("Usuário cadastrado com sucesso !");
       navigate("/login");
 
       return;
@@ -89,7 +90,7 @@ export const Register = () => {
       );
 
       if (!newTeacher) {
-        //toast.warning("Erro no Servidor !");
+        toast.warning("Erro no Servidor !");
         return;
       }
       if (isApiException(newTeacher)) {
@@ -100,7 +101,7 @@ export const Register = () => {
           });
         return;
       }
-      //toast.success("Usuário cadastrado com sucesso !");
+      toast.success("Usuário cadastrado com sucesso !");
       navigate("/login");
       return;
     }

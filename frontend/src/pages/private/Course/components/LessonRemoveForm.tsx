@@ -1,6 +1,7 @@
 import { Button, Label, Select } from "flowbite-react";
 import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { toast } from "react-toastify";
 import { lessonApi } from "services";
 import { useAuthContext } from "shared/contexts";
 import { Lesson } from "types";
@@ -17,6 +18,7 @@ export const LessonRemoveForm = ({ fetcher, values, setCloseModal }: Props) => {
 
   useEffect(() => {
     if (!values) return;
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const onSubmit = handleSubmit(async (data) => {
@@ -25,11 +27,12 @@ export const LessonRemoveForm = ({ fetcher, values, setCloseModal }: Props) => {
     const oldLesson = await lessonApi.delete(Number(data.LessonId));
 
     if (oldLesson === true) {
+      toast.success("Aula adicionada com sucesso !");
       fetcher();
       setCloseModal();
       return;
     }
-    console.error("Erro ao deletar aula: ", oldLesson);
+    toast.error("Erro ao deletar aula");
     return;
   });
 
